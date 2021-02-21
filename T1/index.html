@@ -30,13 +30,16 @@
             <li>
                 <span v-if="!del">{{title}}</span>
                 <span v-else style="text-decoration: line-through">{{title}}</span>
-                <button v-show="!del">delete</button>
+                <button v-show="!del" @click="handleClick">delete</button>
             </li>`,
             data: function() {
                 return {}
             },
             methods: {
-
+                handleClick() {
+                    console.log('click on delete button')
+                    this.$emit('delete', this.title)
+                }
             },
         })
         Vue.component('todo-list', {
@@ -45,20 +48,16 @@
             },
             template: `
             <ul>
-                <todo-item v-for="item in mylist" :title="item.title" :del="item.del"></todo-item>
+                <todo-item @delete="handleDelete" v-for="item in mylist" :title="item.title" :del="item.del"></todo-item>
             </ul>
             `,
             data: function() {
                 return {}
-                // return {
-                //     list: [{
-                //         title: '课程1',
-                //         del: false
-                //     }, {
-                //         title: '课程2',
-                //         del: true
-                //     }, ],
-                // }
+            },
+            methods: {
+                handleDelete(val) {
+                    console.log('handleDelete', val)
+                }
             }
         })
         var vm = new Vue({
